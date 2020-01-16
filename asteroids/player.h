@@ -16,7 +16,6 @@ struct bullet {
 };
 
 struct player {
-
 	float hit_radius;
 	int lives;
 	struct vector2d location;

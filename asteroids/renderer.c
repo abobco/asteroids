@@ -166,6 +166,58 @@ int draw_pixel(uint32_t* pixel_buffer, int x, int y, uint32_t colour) {
 	return 0;
 }
 
+int draw_box(uint32_t* pixel_buffer, int x, int y, uint32_t colour){
+	//dont draw any pixels that are outside of the pixel buffer
+	int bullet_size = 4;
+	x -= bullet_size/2;
+	y -= bullet_size/2;
+	if (x < 0 || y < 0) {		
+		return 1;
+	}
+	if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT) {		
+		return 1;
+	}
+
+	for ( int i = 0; i < bullet_size; i++){
+		for (int j = 0; j < bullet_size; j++){
+			uint32_t position = (y+j) * SCREEN_WIDTH + (x+i);
+			pixel_buffer[position] = colour;
+		}
+	}
+}
+
+int draw_button(uint32_t* pixel_buffer, int x, int y, int width, int height, int direction, uint32_t color){
+
+	// draw the button outline
+	draw_line(pixel_buffer, x, y, x+width, y, color);
+	draw_line(pixel_buffer, x+width, y, x+width, y+height, color);
+	draw_line(pixel_buffer, x+width, y+height, x, y+height, color);
+	draw_line(pixel_buffer, x, y, x, y+height, color);
+
+	int xOffset = width/10;
+	int yOffset = height/10;
+
+	// draw a triangle indicating direction
+	switch (direction){
+		case 0:	// forward arrow
+			draw_line(pixel_buffer, x+width/2, y + yOffset, x + width - xOffset, y + height - yOffset, color );
+			draw_line(pixel_buffer, x + width - xOffset, y + height - yOffset, x + xOffset, y + height - yOffset, color );
+			draw_line(pixel_buffer, x + xOffset, y + height - yOffset, x+width/2, y + yOffset, color );
+			break;
+		case 1:	// left button
+			draw_line(pixel_buffer, x + xOffset, y + height/2, x + width - xOffset, y + yOffset, color );
+			draw_line(pixel_buffer, x + width - xOffset, y + yOffset, x + width - yOffset, y +  height - yOffset, color );
+			draw_line(pixel_buffer, x + width - xOffset, y + height - yOffset, x + xOffset, y + height/2, color );
+			break;
+		case 2:	// right button
+			draw_line(pixel_buffer, x + xOffset, y + yOffset, x + width - xOffset, y + height/2, color );
+			draw_line(pixel_buffer, x + width - xOffset, y + height/2, x + xOffset, y +  height - yOffset, color );
+			draw_line(pixel_buffer,x + xOffset, y +  height - yOffset, x + xOffset, y + yOffset, color );
+			break;
+	}
+	return 0;
+}
+
 void clear_pixels(uint32_t* pixel_buffer, uint32_t colour) {
 
 	int i = 0;
