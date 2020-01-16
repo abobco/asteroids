@@ -6,7 +6,7 @@ programming language, using SDL 2 library to display graphics on the screen.
 
 Modified to compile to WebAssembly and support touch events for mobile
 
-To compile to webassembly, you need to first install [emscripten](https://emscripten.org/docs/getting_started/downloads.html), then open an emscripten command prompt, navigate to your clone's directory and enter:
+To compile to WebAssembly, you need to first install [emscripten](https://emscripten.org/docs/getting_started/downloads.html), then open an emscripten command prompt, navigate to your clone's directory and enter:
 ```
 emcc -o index.html asteroids.c main.c player.c renderer.c vector.c stack.c -Wall -g -lm -s USE_SDL=2 --shell-file sdl_shell.html
 ```
